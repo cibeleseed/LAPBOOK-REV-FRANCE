@@ -1,0 +1,76 @@
+/* Custom Craft & Lapbook Aesthetic Effects */
+        body {
+            background-color: #f1ebd9;
+            background-image: radial-gradient(#d3c5ad 1px, transparent 1px);
+            background-size: 20px 20px;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .paper-texture {
+            background-color: #fdfbf7;
+            background-image: linear-gradient(180deg, rgba(0,0,0,0.01) 0%, rgba(0,0,0,0.03) 100%);
+            box-shadow: 2px 4px 12px rgba(0,0,0,0.08), inset 0 0 40px rgba(0,0,0,0.02);
+            border: 2px dashed #bbb;
+        }
+
+        .lapbook-cover-left {
+            background: linear-gradient(135deg, #002654 0%, #1e3a8a 100%);
+        }
+
+        .lapbook-cover-right {
+            background: linear-gradient(135deg, #dc2626 0%, #991b1b 100%);
+        }
+
+        .cut-line {
+            border: 2px dashed #ef4444;
+            position: relative;
+        }
+
+        .fold-line {
+            border: 2px dotted #3b82f6;
+        }
+
+        .glue-tab {
+            background-image: repeating-linear-gradient(45deg, #e2e8f0, #e2e8f0 10px, #f1f5f9 10px, #f1f5f9 20px);
+            border: 1px dashed #94a3b8;
+        }
+
+        /* Card Flip Animations */
+        .perspective {
+            perspective: 1000px;
+        }
+        .flip-card-inner {
+            transition: transform 0.6s;
+            transform-style: preserve-3d;
+        }
+        .flip-card:hover .flip-card-inner, .flip-card.flipped .flip-card-inner {
+            transform: rotateY(180deg);
+        }
+        .flip-card-front, .flip-card-back {
+            backface-visibility: hidden;
+        }
+        .flip-card-back {
+            transform: rotateY(180deg);
+        }
+
+        /* Printable optimization */
+        @media print {
+            .no-print {
+                display: none !important;
+            }
+            body {
+                background: white !important;
+                padding: 0 !important;
+            }
+            .print-page {
+                page-break-after: always;
+                box-shadow: none !important;
+                border: 1px solid #ccc !important;
+                margin: 0 !important;
+                width: 100% !important;
+                max-width: 100% !important;
+            }
+            .lapbook-container {
+                display: block !important;
+            }
+        }

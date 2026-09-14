@@ -1,0 +1,903 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lapbook Interativo: Revolução Francesa (1789–1799)</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Fredoka:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&family=Special+Elite&display=swap" rel="stylesheet">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'france-blue': '#002654',
+                        'france-red': '#ED2939',
+                        'french-light-blue': '#e0f2fe',
+                        'parchment': '#fdfbf7',
+                        'craft-paper': '#f4ebe1',
+                        'craft-border': '#d7c4b7'
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        hand: ['Caveat', 'cursive'],
+                        heading: ['Fredoka', 'sans-serif'],
+                        typewriter: ['Special Elite', 'monospace']
+                    }
+                }
+            }
+        }
+    </script>
+    <link rel="stylesheet" href="style.css">
+
+</head>
+<body class="text-slate-800 min-h-screen pb-16">
+
+    <!-- Top Action Navigation Bar -->
+    <header class="no-print sticky top-0 z-50 bg-slate-900 text-white shadow-xl border-b-4 border-france-red">
+        <div class="max-w-7xl mx-auto px-4 py-3 flex flex-wrap items-center justify-between gap-3">
+            <div class="flex items-center space-x-3">
+                <span class="text-2xl">✂️</span>
+                <div>
+                    <h1 class="font-heading font-bold text-lg md:text-xl text-yellow-300 leading-tight">KIT LAPBOOK EDUCATIVO</h1>
+                    <p class="text-xs text-slate-300">Revolução Francesa (1789–1799) • Pronto para Imprimir e Montar</p>
+                </div>
+            </div>
+
+            <!-- View Mode Switchers -->
+            <div class="flex flex-wrap items-center gap-2">
+                <button onclick="switchView('interactive')" id="btn-interactive" class="px-3 py-1.5 rounded-lg text-sm font-semibold bg-france-blue text-white hover:bg-blue-800 transition flex items-center gap-1.5 shadow">
+                    <i class="fa-solid fa-laptop-code"></i> Modo Interativo (Digital)
+                </button>
+                <button onclick="switchView('printable')" id="btn-printable" class="px-3 py-1.5 rounded-lg text-sm font-semibold bg-slate-700 text-slate-200 hover:bg-slate-600 transition flex items-center gap-1.5">
+                    <i class="fa-solid fa-print"></i> Kit de Recorte (Para Imprimir)
+                </button>
+                <button onclick="window.print()" class="px-3 py-1.5 rounded-lg text-sm font-semibold bg-emerald-600 hover:bg-emerald-700 text-white transition flex items-center gap-1.5 shadow">
+                    <i class="fa-solid fa-file-pdf"></i> Imprimir / Salvar PDF
+                </button>
+                <button onclick="toggleInstructions()" class="px-3 py-1.5 rounded-lg text-sm font-semibold bg-amber-500 hover:bg-amber-600 text-slate-950 transition flex items-center gap-1.5">
+                    <i class="fa-solid fa-circle-question"></i> Como Montar?
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Instructions Modal -->
+    <div id="instructions-modal" class="hidden fixed inset-0 bg-slate-950/80 z-50 flex items-center justify-center p-4">
+        <div class="bg-white rounded-2xl max-w-2xl w-full p-6 shadow-2xl relative border-4 border-amber-400 max-h-[90vh] overflow-y-auto">
+            <button onclick="toggleInstructions()" class="absolute top-4 right-4 text-slate-400 hover:text-slate-700 text-2xl font-bold">&times;</button>
+            <h2 class="text-2xl font-heading font-bold text-slate-900 mb-4 flex items-center gap-2">
+                <i class="fa-solid fa-scissors text-france-red"></i> Guia do Estudante: Como Montar Seu Lapbook
+            </h2>
+            <div class="space-y-4 text-sm text-slate-700">
+                <div class="flex gap-3 items-start bg-amber-50 p-3 rounded-lg border border-amber-200">
+                    <div class="bg-amber-500 text-white w-7 h-7 rounded-full flex items-center justify-center font-bold text-xs shrink-0">1</div>
+                    <p><strong>Prepare a Pasta Base:</strong> Pegue uma pasta suspensa ou uma cartolina (tamanho A3 ou duas folhas A4 coladas). Dobres as duas extremidades laterais para o centro, criando as duas abas da capa estilo janela.</p>
+                </div>
+                <div class="flex gap-3 items-start bg-blue-50 p-3 rounded-lg border border-blue-200">
+                    <div class="bg-france-blue text-white w-7 h-7 rounded-full flex items-center justify-center font-bold text-xs shrink-0">2</div>
+                    <p><strong>Recorte os Moldes:</strong> Mude para a aba <em>"Kit de Recorte (Para Imprimir)"</em> e imprima as páginas. Siga as linhas tracejadas vermelhas (<span class="text-red-500 font-bold">✂️ Recortar</span>).</p>
+                </div>
+                <div class="flex gap-3 items-start bg-red-50 p-3 rounded-lg border border-red-200">
+                    <div class="bg-france-red text-white w-7 h-7 rounded-full flex items-center justify-center font-bold text-xs shrink-0">3</div>
+                    <p><strong>Dobre e Cole:</strong> Dobre nas linhas pontilhadas azuis e passe cola apenas nas abas marcadas com a textura cinza de cola (<span class="text-slate-600 font-bold">📍 Colar Aqui</span>).</p>
+                </div>
+                <div class="flex gap-3 items-start bg-emerald-50 p-3 rounded-lg border border-emerald-200">
+                    <div class="bg-emerald-600 text-white w-7 h-7 rounded-full flex items-center justify-center font-bold text-xs shrink-0">4</div>
+                    <p><strong>Interaja e Estude:</strong> Cole a capa do lado de fora das abas da pasta e todos os envelopes, minilivros e cartões na parte interna!</p>
+                </div>
+            </div>
+            <div class="mt-6 text-center">
+                <button onclick="toggleInstructions()" class="bg-france-blue text-white px-6 py-2 rounded-xl font-bold hover:bg-blue-900 transition">Entendi, Vamos Começar!</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- MAIN CONTAINER -->
+    <main class="max-w-7xl mx-auto px-2 sm:px-4 mt-6">
+
+        <!-- VIEW 1: DIGITAL INTERACTIVE LAPBOOK -->
+        <div id="view-interactive" class="space-y-8">
+
+            <!-- Banner Info -->
+            <div class="bg-white rounded-2xl p-4 sm:p-6 shadow-md border-2 border-slate-200 text-center max-w-4xl mx-auto">
+                <span class="bg-red-100 text-france-red text-xs font-bold uppercase tracking-wider px-3 py-1 rounded-full">Trabalho Escolar Prático & Educational Kit</span>
+                <h2 class="text-2xl sm:text-4xl font-heading font-extrabold text-slate-900 mt-2">REVOLUÇÃO FRANCESA (1789–1799)</h2>
+                <p class="text-slate-600 text-sm sm:text-base mt-1 max-w-2xl mx-auto">
+                    Explore o lapbook digital abaixo clicando nas abas, envelopes, cartões giratórios e desafios interativos!
+                </p>
+            </div>
+
+            <!-- LAPBOOK TRI-FOLD DISPLAY CONTAINER -->
+            <div class="bg-slate-800 p-3 sm:p-6 rounded-3xl shadow-2xl border-4 border-slate-700">
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-4">
+
+                    <!-- SEÇÃO ESQUERDA DA PASTA (3 Colunas) -->
+                    <div class="lg:col-span-3 space-y-4">
+                        
+                        <!-- 1. CAPA - MINIATURA INTERATIVA -->
+                        <div class="paper-texture rounded-2xl p-4 bg-amber-50 relative overflow-hidden border-2 border-blue-400">
+                            <div class="absolute top-2 right-2 bg-france-blue text-white text-[10px] font-bold px-2 py-0.5 rounded-full">CAPA / PASTA</div>
+                            <h3 class="font-heading font-bold text-france-blue text-lg flex items-center gap-1.0">
+                                📜 1. Capa Principal
+                            </h3>
+                            <div class="mt-2 bg-gradient-to-r from-france-blue via-slate-100 to-france-red p-3 rounded-xl text-center text-white shadow">
+                                <span class="bg-white/20 text-xs px-2 py-0.5 rounded font-mono">1789 – 1799</span>
+                                <h4 class="font-heading text-xl font-black mt-1 uppercase tracking-wide">Revolução Francesa</h4>
+                                <div class="my-2 bg-white/90 text-slate-800 p-2 rounded-lg text-xs italic shadow-inner">
+                                    "Liberdade, Igualdade e Fraternidade"
+                                </div>
+                                <div class="flex justify-center gap-2 text-xl">
+                                    <span>🏰</span><span>🇫🇷</span><span>⚔️</span><span>👑</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 2. CONTEXTO DA FRANÇA (Aba Desdobrável) -->
+                        <div class="paper-texture rounded-2xl p-4 bg-orange-50/60 border-2 border-orange-300">
+                            <h3 class="font-heading font-bold text-orange-900 text-base flex items-center justify-between">
+                                <span>🍞 2. Contexto da França</span>
+                                <span class="text-xs text-orange-600 font-normal">(Clique para abrir)</span>
+                            </h3>
+                            <p class="text-xs text-slate-600 mt-1">Como vivia o país antes de 1789?</p>
+
+                            <button onclick="toggleFlap('flap-contexto')" class="w-full mt-3 bg-orange-500 hover:bg-orange-600 text-white font-bold py-2 px-3 rounded-xl text-xs transition flex items-center justify-center gap-2 shadow">
+                                <i class="fa-solid fa-folder-open"></i> Abrir Aba do Contexto
+                            </button>
+
+                            <div id="flap-contexto" class="hidden mt-3 p-3 bg-white rounded-xl border border-orange-200 text-xs space-y-2 animate-fadeIn">
+                                <div class="flex items-start gap-2">
+                                    <span class="text-base">💰</span>
+                                    <div><strong>Crise Econômica:</strong> A França gastava mais do que arrecadava em guerras e luxo.</div>
+                                </div>
+                                <div class="flex items-start gap-2">
+                                    <span class="text-base">🏰</span>
+                                    <div><strong>Gastos da Monarquia:</strong> O rei Luís XVI e a nobreza mantinham festas e luxos caros em Versalhes.</div>
+                                </div>
+                                <div class="flex items-start gap-2">
+                                    <span class="text-base">🌾</span>
+                                    <div><strong>Fome e Pobreza:</strong> Péssimas colheitas provocaram falta de trigo e alta no preço do pão.</div>
+                                </div>
+                                <div class="flex items-start gap-2">
+                                    <span class="text-base">💸</span>
+                                    <div><strong>Altos Impostos:</strong> Apenas o povo pagava os impostos do reino.</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 3. OS TRÊS ESTADOS (Abas de Cartões) -->
+                        <div class="paper-texture rounded-2xl p-4 bg-blue-50/60 border-2 border-blue-300">
+                            <h3 class="font-heading font-bold text-france-blue text-base">
+                                👥 3. Os Três Estados
+                            </h3>
+                            <p class="text-xs text-slate-600 mt-1">Clique em cada estado para ver suas características:</p>
+
+                            <div class="mt-3 space-y-2">
+                                <!-- Aba 1 -->
+                                <details class="group bg-white rounded-xl border border-blue-200 overflow-hidden text-xs">
+                                    <summary class="p-2.5 font-bold text-slate-800 bg-blue-100/70 cursor-pointer flex justify-between items-center group-open:bg-france-blue group-open:text-white">
+                                        <span>⛪ 1º Estado: Clero</span>
+                                        <i class="fa-solid fa-chevron-down text-xs"></i>
+                                    </summary>
+                                    <div class="p-2.5 text-slate-700 bg-white space-y-1">
+                                        <p>• Composto pelo alto e baixo clero (Igreja Católia).</p>
+                                        <p>• Cerca de 1% da população.</p>
+                                        <p class="text-emerald-700 font-semibold">• Isento de impostos e possuía muitas terras.</p>
+                                    </div>
+                                </details>
+
+                                <!-- Aba 2 -->
+                                <details class="group bg-white rounded-xl border border-purple-200 overflow-hidden text-xs">
+                                    <summary class="p-2.5 font-bold text-slate-800 bg-purple-100/70 cursor-pointer flex justify-between items-center group-open:bg-purple-700 group-open:text-white">
+                                        <span>👑 2º Estado: Nobreza</span>
+                                        <i class="fa-solid fa-chevron-down text-xs"></i>
+                                    </summary>
+                                    <div class="p-2.5 text-slate-700 bg-white space-y-1">
+                                        <p>• Família real, nobres da corte e donos de terras.</p>
+                                        <p>• Cerca de 2% da população.</p>
+                                        <p class="text-emerald-700 font-semibold">• Não pagavam impostos e recebiam pensões.</p>
+                                    </div>
+                                </details>
+
+                                <!-- Aba 3 -->
+                                <details class="group bg-white rounded-xl border border-red-200 overflow-hidden text-xs">
+                                    <summary class="p-2.5 font-bold text-slate-800 bg-red-100/70 cursor-pointer flex justify-between items-center group-open:bg-france-red group-open:text-white">
+                                        <span>🧑‍🌾 3º Estado: Povo / Burguesia</span>
+                                        <i class="fa-solid fa-chevron-down text-xs"></i>
+                                    </summary>
+                                    <div class="p-2.5 text-slate-700 bg-white space-y-1">
+                                        <p>• Camponeses, trabalhadores urbanos e burgueses ricos.</p>
+                                        <p class="font-bold text-france-red">• Representava 97% de toda a população!</p>
+                                        <p class="bg-red-50 text-red-800 p-1 rounded font-semibold">• PAGAVA TODOS OS IMPOSTOS!</p>
+                                    </div>
+                                </details>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <!-- SEÇÃO CENTRAL DA PASTA (6 Colunas) -->
+                    <div class="lg:col-span-6 space-y-4">
+
+                        <!-- 4. SOCIEDADE E DESIGUALDADE (Pirâmide Social Interativa) -->
+                        <div class="paper-texture rounded-2xl p-4 sm:p-5 bg-amber-50/50 border-2 border-amber-300">
+                            <div class="flex items-center justify-between">
+                                <h3 class="font-heading font-bold text-slate-900 text-lg flex items-center gap-2">
+                                    🔺 4. Pirâmide da Sociedade Francesa
+                                </h3>
+                                <span class="text-xs bg-amber-200 text-amber-900 px-2 py-0.5 rounded font-bold">Sociedade Estamental</span>
+                            </div>
+
+                            <!-- Graphic Pyramid -->
+                            <div class="mt-4 max-w-md mx-auto space-y-1 font-heading text-center text-xs font-bold text-white">
+                                <div class="bg-blue-600 p-2 rounded-t-xl shadow hover:scale-105 transition cursor-default">
+                                    1º ESTADO: CLERO (1%)
+                                    <div class="text-[10px] font-normal font-sans opacity-90">Privilegiados • Não pagam impostos</div>
+                                </div>
+                                <div class="bg-purple-600 p-2.5 shadow hover:scale-105 transition cursor-default">
+                                    2º ESTADO: NOBREZA (2%)
+                                    <div class="text-[10px] font-normal font-sans opacity-90">Privilegiados • Cargos públicos e terras</div>
+                                </div>
+                                <div class="bg-france-red p-4 rounded-b-xl shadow hover:scale-105 transition cursor-default">
+                                    3º ESTADO: POVO, TRABALHADORES E BURGUESIA (97%)
+                                    <div class="text-[10px] font-normal font-sans opacity-90">Sem privilégios políticos • Sustentavam todo o Reino</div>
+                                </div>
+                            </div>
+
+                            <!-- Interactive Question -->
+                            <div class="mt-4 bg-white p-3 rounded-xl border border-amber-200 text-xs">
+                                <p class="font-bold text-slate-800">❓ Pergunta Interativa do Lapbook:</p>
+                                <p class="text-slate-600 mt-0.5">“Quem pagava a maior parte dos impostos na França?”</p>
+                                <button onclick="toggleAnswer('ans-1')" class="mt-2 text-france-blue hover:underline font-bold text-xs flex items-center gap-1">
+                                    <i class="fa-solid fa-key"></i> Clique para revelar a resposta
+                                </button>
+                                <div id="ans-1" class="hidden mt-2 p-2 bg-emerald-100 text-emerald-900 rounded-lg font-bold">
+                                    ✅ O TERCEIRO ESTADO (Camponeses, trabalhadores e burgueses)!
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 5. INÍCIO DA REVOLUÇÃO (Queda da Bastilha) -->
+                        <div class="paper-texture rounded-2xl p-4 bg-red-50/60 border-2 border-red-300">
+                            <div class="flex items-center gap-2">
+                                <span class="text-2xl">🔥</span>
+                                <div>
+                                    <h3 class="font-heading font-bold text-france-red text-base">
+                                        5. 14 de Julho de 1789 – Queda da Bastilha
+                                    </h3>
+                                    <p class="text-xs text-slate-600">O marco inicial da Revolução Francesa</p>
+                                </div>
+                            </div>
+                            <div class="mt-3 bg-white p-3 rounded-xl border border-red-200 text-xs text-slate-700 leading-relaxed space-y-2">
+                                <p>
+                                    A <strong>Bastilha</strong> era uma antiga prisão militar em Paris onde o rei prendia seus opositores.
+                                </p>
+                                <p>
+                                    Em <strong>14 de julho de 1789</strong>, o povo parisiense se revoltou, invadiu e destruiu a fortaleza para pegar armas e pólvora.
+                                </p>
+                                <div class="bg-red-100 text-red-900 p-2 rounded-lg font-semibold text-center">
+                                    ⭐ A Queda da Bastilha tornou-se o grande símbolo do FIM DO ABSOLUTISMO no país!
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 6. PRINCIPAIS ACONTECIMENTOS (Linha do Tempo Sanfona) -->
+                        <div class="paper-texture rounded-2xl p-4 bg-slate-50 border-2 border-slate-300">
+                            <h3 class="font-heading font-bold text-slate-900 text-base flex items-center gap-2">
+                                ⏳ 6. Linha do Tempo Interativa (1789–1799)
+                            </h3>
+                            <p class="text-xs text-slate-600 mt-1">Passe pelos anos para acompanhar os fatos:</p>
+
+                            <div class="mt-3 relative border-l-2 border-france-blue ml-3 pl-4 space-y-3 text-xs">
+                                
+                                <div class="relative">
+                                    <span class="absolute -left-[21px] top-0 bg-france-blue text-white rounded-full w-4 h-4 flex items-center justify-center text-[10px]">●</span>
+                                    <strong class="text-france-blue font-heading text-sm">1789</strong> — <span class="font-semibold">Queda da Bastilha & Declaração dos Direitos</span>
+                                    <p class="text-slate-600">Início da revolta popular e criação do documento dos Direitos do Homem.</p>
+                                </div>
+
+                                <div class="relative">
+                                    <span class="absolute -left-[21px] top-0 bg-france-blue text-white rounded-full w-4 h-4 flex items-center justify-center text-[10px]">●</span>
+                                    <strong class="text-france-blue font-heading text-sm">1791</strong> — <span class="font-semibold">Primeira Constituição</span>
+                                    <p class="text-slate-600">A França passa a ser uma Monarquia Constitucional.</p>
+                                </div>
+
+                                <div class="relative">
+                                    <span class="absolute -left-[21px] top-0 bg-france-blue text-white rounded-full w-4 h-4 flex items-center justify-center text-[10px]">●</span>
+                                    <strong class="text-france-blue font-heading text-sm">1792</strong> — <span class="font-semibold">Fim da Monarquia & Proclamação da República</span>
+                                    <p class="text-slate-600">O rei é deposto e a República Francesa é instalada.</p>
+                                </div>
+
+                                <div class="relative">
+                                    <span class="absolute -left-[21px] top-0 bg-france-red text-white rounded-full w-4 h-4 flex items-center justify-center text-[10px]">●</span>
+                                    <strong class="text-france-red font-heading text-sm">1793</strong> — <span class="font-semibold">Execução do Rei Luís XVI</span>
+                                    <p class="text-slate-600">Luís XVI é guilhotinado em praça pública sob acusação de traição.</p>
+                                </div>
+
+                                <div class="relative">
+                                    <span class="absolute -left-[21px] top-0 bg-amber-600 text-white rounded-full w-4 h-4 flex items-center justify-center text-[10px]">●</span>
+                                    <strong class="text-amber-800 font-heading text-sm">1793–1794</strong> — <span class="font-semibold">Período do Terror</span>
+                                    <p class="text-slate-600">Liderado por Robespierre; milhares de pessoas foram presas ou mortas.</p>
+                                </div>
+
+                                <div class="relative">
+                                    <span class="absolute -left-[21px] top-0 bg-emerald-600 text-white rounded-full w-4 h-4 flex items-center justify-center text-[10px]">●</span>
+                                    <strong class="text-emerald-800 font-heading text-sm">1799</strong> — <span class="font-semibold">Golpe de 18 de Brumário</span>
+                                    <p class="text-slate-600">Napoleão Bonaparte assume o poder e encerra a Revolução.</p>
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <!-- 8. IDEIAS DA REVOLUÇÃO (Lema em 3 Cartões) -->
+                        <div class="paper-texture rounded-2xl p-4 bg-indigo-50/50 border-2 border-indigo-200">
+                            <h3 class="font-heading font-bold text-indigo-900 text-base text-center">
+                                🕊️ 8. Ideias da Revolução: O Lema Tricolor
+                            </h3>
+                            <div class="mt-3 grid grid-cols-1 sm:grid-cols-3 gap-2 text-center text-xs">
+                                
+                                <div class="bg-blue-600 text-white p-3 rounded-xl shadow">
+                                    <div class="font-heading font-bold text-sm tracking-wide">LIBERDADE</div>
+                                    <p class="mt-1 text-[11px] font-sans opacity-95">Direito de agir, pensar e se expressar sem opressão.</p>
+                                </div>
+
+                                <div class="bg-white text-slate-800 p-3 rounded-xl shadow border-2 border-slate-300">
+                                    <div class="font-heading font-bold text-sm tracking-wide text-france-blue">IGUALDADE</div>
+                                    <p class="mt-1 text-[11px] font-sans text-slate-600">Todos os cidadãos têm os mesmos direitos perante a lei.</p>
+                                </div>
+
+                                <div class="bg-france-red text-white p-3 rounded-xl shadow">
+                                    <div class="font-heading font-bold text-sm tracking-wide">FRATERNIDADE</div>
+                                    <p class="mt-1 text-[11px] font-sans opacity-95">União, respeito e cooperação entre todos os cidadãos.</p>
+                                </div>
+
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <!-- SEÇÃO DIREITA DA PASTA (3 Colunas) -->
+                    <div class="lg:col-span-3 space-y-4">
+
+                        <!-- 7. PERSONAGENS IMPORTANTES (Flip Cards) -->
+                        <div class="paper-texture rounded-2xl p-4 bg-purple-50/60 border-2 border-purple-300">
+                            <h3 class="font-heading font-bold text-purple-900 text-base">
+                                👤 7. Personagens Históricos
+                            </h3>
+                            <p class="text-xs text-slate-600 mt-0.5">Passe o mouse ou toque nos cartões:</p>
+
+                            <div class="mt-3 grid grid-cols-2 gap-2">
+                                
+                                <!-- Card 1: Luís XVI -->
+                                <div class="perspective h-28 flip-card cursor-pointer">
+                                    <div class="flip-card-inner relative w-full h-full rounded-xl shadow border border-purple-200">
+                                        <div class="flip-card-front absolute inset-0 bg-white p-2 rounded-xl flex flex-col items-center justify-center text-center">
+                                            <span class="text-2xl">👑</span>
+                                            <strong class="text-xs font-heading text-slate-800 mt-1">Luís XVI</strong>
+                                            <span class="text-[9px] text-purple-600 font-bold">Rei da França</span>
+                                        </div>
+                                        <div class="flip-card-back absolute inset-0 bg-purple-700 text-white p-2 rounded-xl flex items-center justify-center text-[10px] text-center leading-tight">
+                                            Rei absolutista julgado e executado na guilhotina em 1793.
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Card 2: Maria Antonieta -->
+                                <div class="perspective h-28 flip-card cursor-pointer">
+                                    <div class="flip-card-inner relative w-full h-full rounded-xl shadow border border-purple-200">
+                                        <div class="flip-card-front absolute inset-0 bg-white p-2 rounded-xl flex flex-col items-center justify-center text-center">
+                                            <span class="text-2xl">👸</span>
+                                            <strong class="text-xs font-heading text-slate-800 mt-1">Maria Antonieta</strong>
+                                            <span class="text-[9px] text-purple-600 font-bold">Rainha Consorte</span>
+                                        </div>
+                                        <div class="flip-card-back absolute inset-0 bg-purple-700 text-white p-2 rounded-xl flex items-center justify-center text-[10px] text-center leading-tight">
+                                            Símbolo do luxo e dos gastos da corte de Versalhes.
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Card 3: Robespierre -->
+                                <div class="perspective h-28 flip-card cursor-pointer">
+                                    <div class="flip-card-inner relative w-full h-full rounded-xl shadow border border-purple-200">
+                                        <div class="flip-card-front absolute inset-0 bg-white p-2 rounded-xl flex flex-col items-center justify-center text-center">
+                                            <span class="text-2xl">⚖️</span>
+                                            <strong class="text-xs font-heading text-slate-800 mt-1">Robespierre</strong>
+                                            <span class="text-[9px] text-purple-600 font-bold">Líder Jacobino</span>
+                                        </div>
+                                        <div class="flip-card-back absolute inset-0 bg-purple-700 text-white p-2 rounded-xl flex items-center justify-center text-[10px] text-center leading-tight">
+                                            Comandou o Período do Terror perseguindo opositores.
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Card 4: Napoleão -->
+                                <div class="perspective h-28 flip-card cursor-pointer">
+                                    <div class="flip-card-inner relative w-full h-full rounded-xl shadow border border-purple-200">
+                                        <div class="flip-card-front absolute inset-0 bg-white p-2 rounded-xl flex flex-col items-center justify-center text-center">
+                                            <span class="text-2xl">⚔️</span>
+                                            <strong class="text-xs font-heading text-slate-800 mt-1">Napoleão</strong>
+                                            <span class="text-[9px] text-purple-600 font-bold">General / Imperador</span>
+                                        </div>
+                                        <div class="flip-card-back absolute inset-0 bg-purple-700 text-white p-2 rounded-xl flex items-center justify-center text-[10px] text-center leading-tight">
+                                            Deu o Golpe de 1799, estandardizando leis e reorganizando a França.
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <!-- 9. DECLARAÇÃO DOS DIREITOS -->
+                        <div class="paper-texture rounded-2xl p-4 bg-teal-50/60 border-2 border-teal-300">
+                            <h3 class="font-heading font-bold text-teal-900 text-base flex items-center gap-1.5">
+                                📋 9. Declaração dos Direitos
+                            </h3>
+                            <p class="text-xs text-slate-600 mt-0.5">Direitos do Homem e do Cidadão (1789)</p>
+
+                            <div class="mt-3 bg-white p-3 rounded-xl border border-teal-200 text-xs space-y-2 text-slate-700">
+                                <div class="flex items-center gap-1.5 text-teal-800 font-bold">
+                                    <i class="fa-solid fa-check text-emerald-600"></i> Liberdade individual e de expressão.
+                                </div>
+                                <div class="flex items-center gap-1.5 text-teal-800 font-bold">
+                                    <i class="fa-solid fa-check text-emerald-600"></i> Igualdade perante a lei.
+                                </div>
+                                <div class="flex items-center gap-1.5 text-teal-800 font-bold">
+                                    <i class="fa-solid fa-check text-emerald-600"></i> Respeito à propriedade privada.
+                                </div>
+                                <div class="flex items-center gap-1.5 text-teal-800 font-bold">
+                                    <i class="fa-solid fa-check text-emerald-600"></i> A soberania pertence ao povo, não ao rei.
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 10. CONSEQUÊNCIAS (Bolso Interativo) -->
+                        <div class="paper-texture rounded-2xl p-4 bg-emerald-50/60 border-2 border-emerald-300">
+                            <h3 class="font-heading font-bold text-emerald-900 text-base flex items-center gap-1">
+                                🎒 10. Bolso das Consequências
+                            </h3>
+                            <p class="text-xs text-slate-600">Fichas com os impactos da Revolução:</p>
+
+                            <div class="mt-3 bg-emerald-100 p-2.5 rounded-xl border border-emerald-300 space-y-1.5 text-xs text-emerald-950">
+                                <div class="bg-white p-2 rounded-lg shadow-sm border-l-4 border-emerald-500 font-medium">
+                                    • Fim dos privilégios do clero e da nobreza.
+                                </div>
+                                <div class="bg-white p-2 rounded-lg shadow-sm border-l-4 border-emerald-500 font-medium">
+                                    • Queda da Monarquia Absoluta.
+                                </div>
+                                <div class="bg-white p-2 rounded-lg shadow-sm border-l-4 border-emerald-500 font-medium">
+                                    • Fortalecimento político da Burguesia.
+                                </div>
+                                <div class="bg-white p-2 rounded-lg shadow-sm border-l-4 border-emerald-500 font-medium">
+                                    • Influência em independências nas Américas.
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 11. VOCÊ SABIA? -->
+                        <div class="paper-texture rounded-2xl p-4 bg-yellow-50/70 border-2 border-amber-300">
+                            <h3 class="font-heading font-bold text-amber-900 text-base">
+                               💡 11. Você Sabia?
+                            </h3>
+                            <ul class="mt-2 text-xs text-slate-700 space-y-1.5 list-disc list-inside">
+                                <li>
+                                    <strong>Direita e Esquerda:</strong> Os termos surgiram na Assembleia Francesa dependendo de onde os grupos sentavam!
+                                </li>
+                                <li>
+                                    <strong>Gorro Frígio:</strong> O chapéu vermelho era usado pelos revolutionaries como símbolo da liberdade.
+                                </li>
+                            </ul>
+                        </div>
+
+                        <!-- 12. ATIVIDADE INTERATIVA (O que eu aprendi?) -->
+                        <div class="paper-texture rounded-2xl p-4 bg-rose-50 border-2 border-rose-300">
+                            <h3 class="font-heading font-bold text-rose-900 text-base flex items-center justify-between">
+                                ✏️ 12. "O que eu aprendi?"
+                            </h3>
+                            <p class="text-xs text-slate-600 mt-0.5">Responda o quiz para testar seu conhecimento:</p>
+
+                            <!-- Quiz Items -->
+                            <div class="mt-3 space-y-3 text-xs" id="interactive-quiz">
+                                <div class="bg-white p-2.5 rounded-xl border border-rose-200">
+                                    <p class="font-bold text-slate-800">1. Em que ano começou a Revolução Francesa?</p>
+                                    <div class="flex gap-2 mt-1.5">
+                                        <button onclick="checkQuiz(this, true)" class="bg-slate-100 hover:bg-slate-200 px-2 py-1 rounded text-[11px] font-semibold">1789</button>
+                                        <button onclick="checkQuiz(this, false)" class="bg-slate-100 hover:bg-slate-200 px-2 py-1 rounded text-[11px] font-semibold">1800</button>
+                                        <button onclick="checkQuiz(this, false)" class="bg-slate-100 hover:bg-slate-200 px-2 py-1 rounded text-[11px] font-semibold">1500</button>
+                                    </div>
+                                </div>
+
+                                <div class="bg-white p-2.5 rounded-xl border border-rose-200">
+                                    <p class="font-bold text-slate-800">2. O que marcou o dia 14 de julho de 1789?</p>
+                                    <div class="flex gap-2 mt-1.5">
+                                        <button onclick="checkQuiz(this, false)" class="bg-slate-100 hover:bg-slate-200 px-2 py-1 rounded text-[11px] font-semibold">Coroação do Rei</button>
+                                        <button onclick="checkQuiz(this, true)" class="bg-slate-100 hover:bg-slate-200 px-2 py-1 rounded text-[11px] font-semibold">Queda da Bastilha</button>
+                                    </div>
+                                </div>
+
+                                <div class="bg-white p-2.5 rounded-xl border border-rose-200">
+                                    <p class="font-bold text-slate-800">3. Quem sustentava a maior parte dos impostos?</p>
+                                    <div class="flex gap-2 mt-1.5">
+                                        <button onclick="checkQuiz(this, false)" class="bg-slate-100 hover:bg-slate-200 px-2 py-1 rounded text-[11px] font-semibold">Nobreza</button>
+                                        <button onclick="checkQuiz(this, true)" class="bg-slate-100 hover:bg-slate-200 px-2 py-1 rounded text-[11px] font-semibold">Terceiro Estado</button>
+                                    </div>
+                                </div>
+
+                                <div class="bg-white p-2.5 rounded-xl border border-rose-200">
+                                    <p class="font-bold text-slate-800">4. Quais eram os três lemas da Revolução?</p>
+                                    <div class="flex gap-2 mt-1.5">
+                                        <button onclick="checkQuiz(this, true)" class="bg-slate-100 hover:bg-slate-200 px-2 py-1 rounded text-[11px] font-semibold">Liberdade, Igualdade, Fraternidade</button>
+                                    </div>
+                                </div>
+
+                                <div class="bg-white p-2.5 rounded-xl border border-rose-200">
+                                    <p class="font-bold text-slate-800">5. Quem assumiu o poder em 1799?</p>
+                                    <div class="flex gap-2 mt-1.5">
+                                        <button onclick="checkQuiz(this, false)" class="bg-slate-100 hover:bg-slate-200 px-2 py-1 rounded text-[11px] font-semibold">Luís XVI</button>
+                                        <button onclick="checkQuiz(this, true)" class="bg-slate-100 hover:bg-slate-200 px-2 py-1 rounded text-[11px] font-semibold">Napoleão Bonaparte</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <!-- VIEW 2: PRINTABLE SCHOOL KIT TEMPLATES FOR CUT & ASSEMBLY -->
+        <div id="view-printable" class="hidden space-y-10">
+
+            <div class="no-print bg-amber-100 border-l-4 border-amber-500 text-amber-900 p-4 rounded-xl shadow mb-6">
+                <h3 class="font-bold font-heading text-lg flex items-center gap-2">
+                    <i class="fa-solid fa-scissors"></i> MODO DE IMPRESSÃO - KIT COMPLETO DE CORTAR E COLAR
+                </h3>
+                <p class="text-sm mt-1">
+                    Esta seção foi formatada para ser impressa na escola ou em casa. As peças possuem marcas explicativas de corte (✂️), dobra (---) e cola (📍). Basta apertar <strong>Ctrl + P</strong> ou clicar em <strong>"Imprimir / Salvar PDF"</strong> na barra superior.
+                </p>
+            </div>
+
+            <!-- PAGE 1: CAPA E CONTEXTO -->
+            <div class="print-page paper-texture bg-white p-6 rounded-2xl max-w-4xl mx-auto space-y-6 border-2 border-slate-300">
+                <div class="flex justify-between items-center border-b pb-2">
+                    <span class="text-xs font-bold text-slate-500 font-mono">PÁGINA 1 DE 3 • CAPA E ABAS PRINCIPAIS</span>
+                    <span class="text-xs font-bold text-france-red">✂️ Kit Lapbook: Revolução Francesa</span>
+                </div>
+
+                <!-- CAPAS PARA A PASTA -->
+                <div class="space-y-2">
+                    <h4 class="font-bold text-sm text-slate-700 flex items-center gap-1">
+                        <span class="text-red-500 font-mono">✂️</span> MOLDES DAS CAPAS DA PASTA (Cole do lado de fora)
+                    </h4>
+                    <div class="grid grid-cols-2 gap-4">
+                        
+                        <!-- Capa Esquerda -->
+                        <div class="cut-line p-4 lapbook-cover-left text-white rounded-xl text-center space-y-3 min-h-[220px] flex flex-col justify-between">
+                            <span class="text-[10px] bg-white/20 px-2 py-0.5 rounded font-mono">ABAR ESQUERDA</span>
+                            <div>
+                                <h3 class="font-heading font-black text-xl uppercase tracking-wider">REVOLUÇÃO</h3>
+                                <p class="text-xs font-hand text-yellow-300 text-lg">França no Século XVIII</p>
+                            </div>
+                            <div class="text-3xl">🇫🇷 🏰</div>
+                            <div class="glue-tab p-1 text-[10px] text-slate-700 font-bold rounded">
+                                📍 COLE NA PARTE EXTERNA ESQUERDA DA PASTA
+                            </div>
+                        </div>
+
+                        <!-- Capa Direita -->
+                        <div class="cut-line p-4 lapbook-cover-right text-white rounded-xl text-center space-y-3 min-h-[220px] flex flex-col justify-between">
+                            <span class="text-[10px] bg-white/20 px-2 py-0.5 rounded font-mono">ABAR DIREITA</span>
+                            <div>
+                                <h3 class="font-heading font-black text-xl uppercase tracking-wider">FRANCESA</h3>
+                                <p class="text-xs font-mono text-yellow-200">1789 – 1799</p>
+                            </div>
+                            <div class="text-3xl">⚔️ 👑</div>
+                            <div class="glue-tab p-1 text-[10px] text-slate-700 font-bold rounded">
+                                📍 COLE NA PARTE EXTERNA DIREITA DA PASTA
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <!-- MOLDE: OS TRÊS ESTADOS (3 ABAS) -->
+                <div class="pt-4 border-t space-y-2">
+                    <h4 class="font-bold text-sm text-slate-700 flex items-center gap-1">
+                        <span class="text-red-500 font-mono">✂️</span> MOLDE: ABA DOS TRÊS ESTADOS (Recorte em volta e cole a aba cinza)
+                    </h4>
+                    
+                    <div class="cut-line p-4 bg-blue-50/50 rounded-2xl space-y-3">
+                        <div class="glue-tab p-1 text-center text-xs text-slate-700 font-bold rounded mb-2">
+                            📍 ABA DE COLA PARA FIXAR NO LAPBOOK
+                        </div>
+                        <div class="grid grid-cols-3 gap-2 text-xs">
+                            <div class="border-2 border-blue-400 bg-white p-2 rounded-lg">
+                                <strong class="text-blue-900 block font-heading">1º ESTADO: CLERO</strong>
+                                <p class="text-[11px] text-slate-600 mt-1">• Membros da Igreja Católica</p>
+                                <p class="text-[11px] text-slate-600">• Possuíam terras e não pagavam impostos</p>
+                            </div>
+                            <div class="border-2 border-purple-400 bg-white p-2 rounded-lg">
+                                <strong class="text-purple-900 block font-heading">2º ESTADO: NOBREZA</strong>
+                                <p class="text-[11px] text-slate-600 mt-1">• Família Real e Nobres</p>
+                                <p class="text-[11px] text-slate-600">• Viviam de impostos e privilégios</p>
+                            </div>
+                            <div class="border-2 border-red-400 bg-white p-2 rounded-lg">
+                                <strong class="text-france-red block font-heading">3º ESTADO: POVO</strong>
+                                <p class="text-[11px] text-slate-600 mt-1">• Burgueses, camponeses e artesãos</p>
+                                <p class="text-[11px] text-red-700 font-bold">• 97% da população. Pagavam tudo!</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- PAGE 2: PIRÂMIDE SOCIAL & PERSONAGENS HISTÓRICOS -->
+            <div class="print-page paper-texture bg-white p-6 rounded-2xl max-w-4xl mx-auto space-y-6 border-2 border-slate-300">
+                <div class="flex justify-between items-center border-b pb-2">
+                    <span class="text-xs font-bold text-slate-500 font-mono">PÁGINA 2 DE 3 • PIRÂMIDE E CARTÕES DE PERSONAGENS</span>
+                    <span class="text-xs font-bold text-france-red">✂️ Kit Lapbook: Revolução Francesa</span>
+                </div>
+
+                <!-- PIRÂMIDE SOCIAL -->
+                <div class="space-y-2">
+                    <h4 class="font-bold text-sm text-slate-700 flex items-center gap-1">
+                        <span class="text-red-500 font-mono">✂️</span> MOLDE: PIRÂMIDE DA SOCIEDADE E DESIGUALDADE
+                    </h4>
+                    <div class="cut-line p-4 bg-amber-50 rounded-2xl space-y-2 text-center">
+                        <div class="glue-tab p-1 text-[11px] font-bold text-slate-700 mb-2">
+                            📍 ÁREA DE COLA DO VERSO DA PIRÂMIDE
+                        </div>
+                        <div class="max-w-md mx-auto space-y-1 font-heading text-xs text-white">
+                            <div class="bg-blue-600 p-2 rounded-t-lg">1º ESTADO (1%): CLERO - Isentos de Impostos</div>
+                            <div class="bg-purple-600 p-2.5">2º ESTADO (2%): NOBREZA - Cobravam taxas e viviam do luxo</div>
+                            <div class="bg-france-red p-3 rounded-b-lg">3º ESTADO (97%): POVO & BURGUESIA - Trabalhavam e sustentavam o país</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- CARTÕES DE PERSONAGENS -->
+                <div class="pt-4 border-t space-y-2">
+                    <h4 class="font-bold text-sm text-slate-700 flex items-center gap-1">
+                        <span class="text-red-500 font-mono">✂️</span> MOLDE: CARTÕES DOBRÁVEIS DE PERSONAGENS HISTÓRICOS (Dobre no meio)
+                    </h4>
+
+                    <div class="grid grid-cols-2 gap-4 text-xs">
+                        
+                        <!-- Mini Card 1 -->
+                        <div class="cut-line p-3 bg-slate-50 rounded-xl space-y-2">
+                            <div class="fold-line p-1 text-center font-mono text-[10px] text-blue-600">
+                                ─── DOBRAR AQUI (FRENTE E VERSO) ───
+                            </div>
+                            <div class="grid grid-cols-2 gap-1 text-center">
+                                <div class="bg-white p-2 rounded border border-purple-200">
+                                    <span class="text-xl">👑</span>
+                                    <strong class="block font-heading text-xs mt-1">Luís XVI</strong>
+                                </div>
+                                <div class="bg-purple-100 p-2 rounded text-[10px] flex items-center">
+                                    Rei absolutista julgado e executado na guilhotina em 1793.
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Mini Card 2 -->
+                        <div class="cut-line p-3 bg-slate-50 rounded-xl space-y-2">
+                            <div class="fold-line p-1 text-center font-mono text-[10px] text-blue-600">
+                                ─── DOBRAR AQUI (FRENTE E VERSO) ───
+                            </div>
+                            <div class="grid grid-cols-2 gap-1 text-center">
+                                <div class="bg-white p-2 rounded border border-purple-200">
+                                    <span class="text-xl">👸</span>
+                                    <strong class="block font-heading text-xs mt-1">Maria Antonieta</strong>
+                                </div>
+                                <div class="bg-purple-100 p-2 rounded text-[10px] flex items-center">
+                                    Rainha associada aos grandes gastos e ao luxo da corte.
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Mini Card 3 -->
+                        <div class="cut-line p-3 bg-slate-50 rounded-xl space-y-2">
+                            <div class="fold-line p-1 text-center font-mono text-[10px] text-blue-600">
+                                ─── DOBRAR AQUI (FRENTE E VERSO) ───
+                            </div>
+                            <div class="grid grid-cols-2 gap-1 text-center">
+                                <div class="bg-white p-2 rounded border border-purple-200">
+                                    <span class="text-xl">⚖️</span>
+                                    <strong class="block font-heading text-xs mt-1">Robespierre</strong>
+                                </div>
+                                <div class="bg-purple-100 p-2 rounded text-[10px] flex items-center">
+                                    Líder jacobino e figura central do Período do Terror.
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Mini Card 4 -->
+                        <div class="cut-line p-3 bg-slate-50 rounded-xl space-y-2">
+                            <div class="fold-line p-1 text-center font-mono text-[10px] text-blue-600">
+                                ─── DOBRAR AQUI (FRENTE E VERSO) ───
+                            </div>
+                            <div class="grid grid-cols-2 gap-1 text-center">
+                                <div class="bg-white p-2 rounded border border-purple-200">
+                                    <span class="text-xl">⚔️</span>
+                                    <strong class="block font-heading text-xs mt-1">Napoleão</strong>
+                                </div>
+                                <div class="bg-purple-100 p-2 rounded text-[10px] flex items-center">
+                                    General que deu o Golpe de 1799 encerrando a Revolução.
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- PAGE 3: BOLSO DE CONSEQUÊNCIAS & ATIVIDADE -->
+            <div class="print-page paper-texture bg-white p-6 rounded-2xl max-w-4xl mx-auto space-y-6 border-2 border-slate-300">
+                <div class="flex justify-between items-center border-b pb-2">
+                    <span class="text-xs font-bold text-slate-500 font-mono">PÁGINA 3 DE 3 • BOLSO, CONSEQUÊNCIAS E ATIVIDADE</span>
+                    <span class="text-xs font-bold text-france-red">✂️ Kit Lapbook: Revolução Francesa</span>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    
+                    <!-- MOLDE DE BOLSO DAS CONSEQUÊNCIAS -->
+                    <div class="space-y-3">
+                        <h4 class="font-bold text-sm text-slate-700 flex items-center gap-1">
+                            <span class="text-red-500 font-mono">✂️</span> MOLDE: BOLSO DE CONSEQUÊNCIAS
+                        </h4>
+
+                        <div class="cut-line p-4 bg-emerald-50 rounded-2xl space-y-2">
+                            <div class="text-center font-heading font-bold text-emerald-900">
+                                🎒 BOLSO DAS CONSEQUÊNCIAS
+                            </div>
+                            <p class="text-[10px] text-slate-600 text-center">Dobre as abas laterais para trás e cole para formar o envelope no lapbook!</p>
+                            
+                            <div class="flex justify-between text-[9px] font-mono font-bold text-slate-500 my-2">
+                                <span class="glue-tab p-1 rounded">📍 ABA ESQUERDA</span>
+                                <span class="glue-tab p-1 rounded">📍 ABA DIREITA</span>
+                            </div>
+
+                            <div class="glue-tab p-1 text-center text-[10px] font-bold text-slate-700 rounded">
+                                📍 ABA INFERIOR DE COLA
+                            </div>
+                        </div>
+
+                        <!-- FICHAS DESTACÁVEIS PARA COLOCAR NO BOLSO -->
+                        <div class="space-y-1">
+                            <span class="text-xs font-bold text-slate-600">Fichas para cortar e colocar DENTRO do bolso:</span>
+                            <div class="grid grid-cols-2 gap-1.5 text-[10px]">
+                                <div class="cut-line bg-white p-2 rounded font-medium">1. Fim dos privilégios do clero e da nobreza.</div>
+                                <div class="cut-line bg-white p-2 rounded font-medium">2. Fortalecimento da Burguesia no poder.</div>
+                                <div class="cut-line bg-white p-2 rounded font-medium">3. Declaração dos Direitos Humanos.</div>
+                                <div class="cut-line bg-white p-2 rounded font-medium">4. Queda do Absolutismo na Europa.</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- ATIVIDADE "O QUE EU APRENDI?" PARA RECORTAR E COLAR -->
+                    <div class="space-y-3">
+                        <h4 class="font-bold text-sm text-slate-700 flex items-center gap-1">
+                            <span class="text-red-500 font-mono">✂️</span> MOLDE: FICHA "O QUE EU APRENDI?"
+                        </h4>
+
+                        <div class="cut-line p-4 bg-rose-50 rounded-2xl space-y-3 text-xs">
+                            <div class="glue-tab p-1 text-center text-[10px] font-bold text-slate-700 rounded">
+                                📍 COLA NO CANTO INFERIOR DO LAPBOOK
+                            </div>
+                            <h5 class="font-heading font-bold text-rose-900 text-center text-sm">✏️ O que eu aprendi? (Responda):</h5>
+
+                            <div class="space-y-2 text-[11px] text-slate-700">
+                                <div>
+                                    <p>1. Em que ano começou a Revolução Francesa?</p>
+                                    <div class="border-b border-slate-400 mt-1 h-4"></div>
+                                </div>
+                                <div>
+                                    <p>2. O que aconteceu em 14 de julho de 1789?</p>
+                                    <div class="border-b border-slate-400 mt-1 h-4"></div>
+                                </div>
+                                <div>
+                                    <p>3. Quem fazia parte do Terceiro Estado?</p>
+                                    <div class="border-b border-slate-400 mt-1 h-4"></div>
+                                </div>
+                                <div>
+                                    <p>4. Quais eram os 3 princípios da Revolução?</p>
+                                    <div class="border-b border-slate-400 mt-1 h-4"></div>
+                                </div>
+                                <div>
+                                    <p>5. Quem assumiu o poder no ano de 1799?</p>
+                                    <div class="border-b border-slate-400 mt-1 h-4"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+
+    </main>
+
+    <script>
+        // Toggle Flaps and Sections in Interactive Mode
+        function toggleFlap(elementId) {
+            const element = document.getElementById(elementId);
+            if (element) {
+                element.classList.toggle('hidden');
+            }
+        }
+
+        // Reveal answers for interactive questions
+        function toggleAnswer(answerId) {
+            const answer = document.getElementById(answerId);
+            if (answer) {
+                answer.classList.toggle('hidden');
+            }
+        }
+
+        // Check quiz answer buttons in interactive mode
+        function checkQuiz(button, isCorrect) {
+            const parent = button.parentElement;
+            const buttons = parent.querySelectorAll('button');
+            
+            buttons.forEach(btn => {
+                btn.classList.remove('bg-emerald-500', 'bg-red-500', 'text-white');
+                btn.classList.add('bg-slate-100');
+            });
+
+            if (isCorrect) {
+                button.classList.remove('bg-slate-100');
+                button.classList.add('bg-emerald-500', 'text-white');
+            } else {
+                button.classList.remove('bg-slate-100');
+                button.classList.add('bg-red-500', 'text-white');
+            }
+        }
+
+        // Toggle Instructions Modal
+        function toggleInstructions() {
+            const modal = document.getElementById('instructions-modal');
+            if (modal) {
+                modal.classList.toggle('hidden');
+            }
+        }
+
+        // Switch between Interactive View and Printable Cut-Out Kit View
+        function switchView(mode) {
+            const interactiveView = document.getElementById('view-interactive');
+            const printableView = document.getElementById('view-printable');
+            const btnInteractive = document.getElementById('btn-interactive');
+            const btnPrintable = document.getElementById('btn-printable');
+
+            if (mode === 'interactive') {
+                interactiveView.classList.remove('hidden');
+                printableView.classList.add('hidden');
+
+                btnInteractive.classList.add('bg-france-blue', 'text-white');
+                btnInteractive.classList.remove('bg-slate-700', 'text-slate-200');
+
+                btnPrintable.classList.remove('bg-france-blue', 'text-white');
+                btnPrintable.classList.add('bg-slate-700', 'text-slate-200');
+            } else {
+                interactiveView.classList.add('hidden');
+                printableView.classList.remove('hidden');
+
+                btnPrintable.classList.add('bg-france-blue', 'text-white');
+                btnPrintable.classList.remove('bg-slate-700', 'text-slate-200');
+
+                btnInteractive.classList.remove('bg-france-blue', 'text-white');
+                btnInteractive.classList.add('bg-slate-700', 'text-slate-200');
+            }
+        }
+    </script>
+</body>
+</html>
